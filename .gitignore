@@ -36,3 +36,5 @@ out/
 ### VS Code ###
 .vscode/
 /camunda-h2-database.mv.db
+/credit-broker.bpmn
+/camunda-h2-database.trace.db

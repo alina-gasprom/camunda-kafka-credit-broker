@@ -21,6 +21,12 @@ dependencies {
     //STARTER
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
+    //DB
+    implementation 'org.postgresql:postgresql:42.7.3'
+
+    //BROKERS
+    implementation 'org.springframework.kafka:spring-kafka'
+
     // DB -> CAMUNDA
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     runtimeOnly 'com.h2database:h2'

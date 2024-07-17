@@ -10,3 +10,16 @@ server:
 logging:
   level:
     ru.alina: debug
+
+
+
+
+
+spring:
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9094
+      group-id: group
+
+
+
