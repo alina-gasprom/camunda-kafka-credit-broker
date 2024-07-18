@@ -1,8 +1,9 @@
-package ru.alina.creditbroker.repository;
+package ru.alina.creditbroker.repository.impl;
 
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
 import ru.alina.creditbroker.jooq.public_.tables.records.ClientsRecord;
+import ru.alina.creditbroker.repository.ClientRepository;
 
 import static ru.alina.creditbroker.jooq.public_.Tables.CLIENTS;
 
