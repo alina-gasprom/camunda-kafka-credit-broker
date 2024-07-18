@@ -11,17 +11,17 @@
         <camunda:executionListener expression="#{messageConsumer}" event="start" />
       </bpmn:extensionElements>
       <bpmn:outgoing>Flow_0pki6kx</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_1n4fzwz" messageRef="start_process_msg"/>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1n4fzwz" messageRef="start_process_msg" />
     </bpmn:startEvent>
-    <bpmn:endEvent id="Event_1bhtw3v">
+    <bpmn:endEvent id="end" name="End">
       <bpmn:incoming>Flow_0gbixuz</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:userTask id="Activity_0uifj1n" name="form">
+    <bpmn:sequenceFlow id="Flow_0pki6kx" sourceRef="start" targetRef="userVerification" />
+    <bpmn:sequenceFlow id="Flow_0gbixuz" sourceRef="userVerification" targetRef="end" />
+    <bpmn:serviceTask id="userVerification" name="verify user as client" camunda:delegateExpression="#{verificationUserAsClientDelegate}">
       <bpmn:incoming>Flow_0pki6kx</bpmn:incoming>
       <bpmn:outgoing>Flow_0gbixuz</bpmn:outgoing>
-    </bpmn:userTask>
-    <bpmn:sequenceFlow id="Flow_0pki6kx" sourceRef="start" targetRef="Activity_0uifj1n" />
-    <bpmn:sequenceFlow id="Flow_0gbixuz" sourceRef="Activity_0uifj1n" targetRef="Event_1bhtw3v" />
+    </bpmn:serviceTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0rws6rl">
@@ -32,11 +32,15 @@
       <bpmndi:BPMNShape id="Event_00oeepg_di" bpmnElement="start">
         <dc:Bounds x="179" y="189" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1bhtw3v_di" bpmnElement="Event_1bhtw3v">
+      <bpmndi:BPMNShape id="Event_1bhtw3v_di" bpmnElement="end">
         <dc:Bounds x="432" y="189" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="440" y="232" width="20" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_00i4of9_di" bpmnElement="Activity_0uifj1n">
+      <bpmndi:BPMNShape id="Activity_1nemfl1_di" bpmnElement="userVerification">
         <dc:Bounds x="270" y="167" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0pki6kx_di" bpmnElement="Flow_0pki6kx">
         <di:waypoint x="215" y="207" />

@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 import ru.alina.creditbroker.dto.UserDto;
-import ru.alina.creditbroker.service.CamundaService;
+import ru.alina.creditbroker.service.impl.CamundaService;
 
 
 @Component

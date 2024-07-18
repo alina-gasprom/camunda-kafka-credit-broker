@@ -38,3 +38,4 @@ out/
 /camunda-h2-database.mv.db
 /credit-broker.bpmn
 /camunda-h2-database.trace.db
+/src/main/java/ru/alina/creditbroker/jooq/

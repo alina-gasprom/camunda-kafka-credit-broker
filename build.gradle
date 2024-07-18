@@ -1,7 +1,17 @@
+import org.yaml.snakeyaml.Yaml
+
+buildscript {
+    dependencies {
+        classpath 'org.postgresql:postgresql:42.2.14'
+        classpath group: 'org.yaml', name: 'snakeyaml', version: '1.19'
+
+    }
+}
 plugins {
     id 'java'
     id 'org.springframework.boot' version '3.3.1'
     id 'io.spring.dependency-management' version '1.1.5'
+    id "org.jooq.jooq-codegen-gradle" version "3.19.10"
 }
 
 group = 'ru.alina'
@@ -21,22 +31,66 @@ dependencies {
     //STARTER
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
-    //DB
-    implementation 'org.postgresql:postgresql:42.7.3'
-
     //BROKERS
     implementation 'org.springframework.kafka:spring-kafka'
 
+    //DB
+    implementation 'org.postgresql:postgresql:42.7.3'
+    implementation group: 'org.springframework', name: 'spring-jdbc', version: '6.1.10'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-jooq', version: '3.3.1'
+
     // DB -> CAMUNDA
-    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     runtimeOnly 'com.h2database:h2'
 
     //CAMUNDA
     implementation 'org.camunda.bpm.springboot:camunda-bpm-spring-boot-starter-webapp:7.21.0'
 
+
+    //MAPPER
+    implementation group: 'org.modelmapper', name: 'modelmapper', version: '3.2.0'
+
     //TEST
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    testImplementation group: 'org.springframework.boot', name: 'spring-boot-testcontainers', version: '3.3.1'
+    testImplementation 'org.testcontainers:junit-jupiter'
+    testImplementation group: 'org.testcontainers', name: 'postgresql', version: '1.19.8'
+    implementation group: 'org.testcontainers', name: 'jdbc', version: '1.19.8'
+}
+
+def cfg = new Yaml().load(file('src/main/resources/application.yml').newInputStream())
+
+jooq {
+    configuration {
+        jdbc {
+            driver = 'org.postgresql.Driver'
+            url = cfg.spring.datasource.url
+            user = cfg.spring.datasource.username
+            password = cfg.spring.datasource.password
+        }
+
+        generator {
+            generate {
+
+                // Generate the Sequences class
+                sequences = true
+            }
+            database {
+                name = "org.jooq.meta.postgres.PostgresDatabase"
+            }
+            target {
+
+                // The destination package of your generated classes (within the
+                // destination directory)
+                packageName = "ru.alina.creditbroker.jooq"
+
+                // The destination directory of your generated classes
+                directory = "src/main/java"
+            }
+        }
+
+    }
+
 }
 
 tasks.named('test') {
